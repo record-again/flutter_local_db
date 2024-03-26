@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController {
+  final box = GetStorage();
+
   RxInt data = 0.obs;
 
   void decrement() {
@@ -16,24 +18,22 @@ class HomeController extends GetxController {
 
   void simpanData() async {
     print("SIMPAN DATA");
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.getInt('angkaTerakhir') != null) {
-      await prefs.remove('angkaTerakhir');
+
+    if (box.read('angkaTerakhir') != null) {
+      await box.remove('angkaTerakhir');
     }
-    await prefs.setInt('angkaTerakhir', data.value);
+    await box.write('angkaTerakhir', data.value);
   }
 
   void bacaData() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.getInt('angkaTerakhir') != null) {
-      data.value = prefs.getInt('angkaTerakhir')!;
+    if (box.read('angkaTerakhir') != null) {
+      data.value = box.read('angkaTerakhir')! as int;
     }
   }
 
   void resetData() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.getInt('angkaTerakhir') != null) {
-      await prefs.remove('angkaTerakhir');
+    if (box.read('angkaTerakhir') != null) {
+      await box.remove('angkaTerakhir');
       data.value = 0;
     }
   }
