@@ -11,7 +11,6 @@ class HomeView extends GetView<HomeController> {
       appBar: AppBar(
         title: Text('HomeView'),
         centerTitle: true,
-        backgroundColor: Colors.amber,
         actions: [
           IconButton(
             onPressed: () => controller.resetData(),
